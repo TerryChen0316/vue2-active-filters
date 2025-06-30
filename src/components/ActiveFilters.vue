@@ -2,20 +2,10 @@
   <div 
     v-if="hasActiveFilters" 
     class="filters-section"
-    :class="[customClass, customClasses.wrapper]"
-    :style="customStyles.wrapper"
   >
     <!-- Filter Count -->
-    <div 
-      class="filter-count"
-      :class="customClasses.filterCount"
-      :style="customStyles.filterCount"
-    >
-      <span 
-        class="filter-count-text"
-        :class="customClasses.filterCountText"
-        :style="customStyles.filterCountText"
-      >
+    <div class="filter-count">
+      <span class="filter-count-text">
         <i class="el-icon-search"></i>
         {{ i18n.t('filterCount', { count: activeFilterCount }) }}
       </span>
@@ -25,8 +15,6 @@
         size="mini" 
         @click="handleClearAll" 
         class="clear-all-btn"
-        :class="customClasses.clearAllBtn"
-        :style="customStyles.clearAllBtn"
       >
         {{ i18n.t('clearAll') }}
       </el-button>
@@ -36,14 +24,8 @@
     <div 
       v-if="hasActiveFilters" 
       class="active-filters"
-      :class="customClasses.activeFilters"
-      :style="customStyles.activeFilters"
     >
-      <div 
-        class="active-filters-tags"
-        :class="customClasses.activeFiltersTags"
-        :style="customStyles.activeFiltersTags"
-      >
+      <div class="active-filters-tags">
         <template v-for="(values, key) in activeFilters">
           <el-tag
             v-for="value in values"
@@ -51,8 +33,6 @@
             closable
             size="small"
             class="filter-tag"
-            :class="customClasses.filterTag"
-            :style="customStyles.filterTag"
             @close="handleRemoveFilter(key, value)"
           >
             {{ getColumnLabel(key) }}: {{ value }}
@@ -74,8 +54,8 @@ export default {
       type: Object,
       default: () => ({})
     },
-    columns: {
-      type: Array,
+    filterLabels: {
+      type: Object,
       required: true
     },
     // i18n props
@@ -86,35 +66,6 @@ export default {
     customMessages: {
       type: Object,
       default: () => ({})
-    },
-    // Customization props
-    customClass: {
-      type: String,
-      default: ''
-    },
-    customClasses: {
-      type: Object,
-      default: () => ({
-        wrapper: '',
-        filterCount: '',
-        filterCountText: '',
-        clearAllBtn: '',
-        activeFilters: '',
-        activeFiltersTags: '',
-        filterTag: ''
-      })
-    },
-    customStyles: {
-      type: Object,
-      default: () => ({
-        wrapper: {},
-        filterCount: {},
-        filterCountText: {},
-        clearAllBtn: {},
-        activeFilters: {},
-        activeFiltersTags: {},
-        filterTag: {}
-      })
     }
   },
   
@@ -197,8 +148,7 @@ export default {
     },
     
     getColumnLabel(columnProp) {
-      const column = this.columns.find(col => col.prop === columnProp)
-      return column ? column.label : columnProp
+      return this.filterLabels?.[columnProp] ? this.filterLabels[columnProp] : columnProp
     },
     
     handleRemoveFilter(columnProp, value) {
