@@ -230,6 +230,44 @@ The component gracefully handles edge cases:
 - Missing filter labels (falls back to property names)
 - Malformed filter data
 
+## TypeScript Support
+
+This component includes comprehensive TypeScript definitions for enhanced development experience. The type definitions provide:
+
+- **Full type safety** for all component props and methods
+- **IntelliSense support** in TypeScript-enabled editors
+- **Detailed JSDoc documentation** for better IDE integration
+- **Event type definitions** for EventBus communication
+- **Utility types** for common data structures
+
+### Type Definitions
+
+The main types available:
+
+```typescript
+import ActiveFilters, { 
+  ActiveFiltersData, 
+  FilterLabels, 
+  CustomMessages,
+  FilterRemoveEvent,
+  EventBusData,
+  FilterValue 
+} from '@terry0316/vue2-active-filters'
+
+// Example usage with types
+const activeFilters: ActiveFiltersData = {
+  category: ['electronics', 'books'],
+  status: ['active']
+}
+
+const filterLabels: FilterLabels = {
+  category: 'Category',
+  status: 'Status'
+}
+```
+
+The component supports both JavaScript and TypeScript projects seamlessly.
+
 ## Browser Support
 
 This component supports all modern browsers that are compatible with Vue 2.7+ and Element UI 2.15+.

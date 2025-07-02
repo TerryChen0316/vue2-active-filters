@@ -1,6 +1,6 @@
 {
   "name": "@terry0316/vue2-active-filters",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Vue 2 + Element UI active filters component with remote search and i18n support.",
   "main": "index.js",
   "types": "types/index.d.ts",
@@ -36,6 +36,7 @@
     "babel-core": "^6.26.3",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
+    "typescript": "^5.8.3",
     "vite": "^7.0.0",
     "vue": "^2.7.16",
     "vue-jest": "^3.0.7",
