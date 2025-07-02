@@ -24,6 +24,7 @@ To integrate `ActiveFilters` into your Vue application, import the component and
   <ActiveFilters
     :active-filters="myActiveFilters"
     :filter-labels="myFilterLabels"
+    :background-color="filterBackgroundColor"
     :locale="currentLocale"
     :custom-messages="myCustomMessages"
     @remove-filter="handleRemoveFilter"
@@ -48,6 +49,7 @@ export default {
         category: 'Category',
         price: 'Price Range'
       },
+      filterBackgroundColor: '#f0f9ff', // Light blue background
       currentLocale: 'en',
       myCustomMessages: {
         en: {
@@ -81,6 +83,7 @@ export default {
 | :--------------- | :------- | :--------- | :------- | :------------------------------------------------------------------------ |
 | `activeFilters`  | `Object` | `{}`       | `false`  | An object where keys are filter properties and values are arrays of active filter values. |
 | `filterLabels`   | `Object` |            | `true`   | An object mapping filter property keys to their display labels (e.g., `{ 'columnProp': 'Display Label' }`). |
+| `backgroundColor`| `String` | `'#f0f9ff'`| `false`  | Custom background color for the active filters section.                 |
 | `locale`         | `String` | `DEFAULT_LOCALE` | `false`  | The current locale for internationalization.                             |
 | `customMessages` | `Object` | `{}`       | `false`  | Custom messages for i18n, overriding or extending default translations.   |
 
@@ -149,4 +152,97 @@ The styling uses Element UI's `el-tag` and `el-button` components, so ensure Ele
   * `getColumnLabel(columnProp)`: Retrieves the display label for a given filter property from `filterLabels` or defaults to the `columnProp` itself.
   * `handleRemoveFilter(columnProp, value)`: Publishes `EVENTS.FILTER_REMOVED` and emits the `remove-filter` event.
   * `handleClearAll()`: Publishes `EVENTS.FILTERS_CLEARED` and emits the `clear-all` event.
-  * 
+
+## Testing
+
+This component comes with a comprehensive test suite that covers all major functionality. The tests are written using Jest and focus on testing the component's logic without requiring complex Vue component mounting.
+
+### Running Tests
+
+```bash
+npm test
+```
+
+### Test Coverage
+
+The test suite includes:
+
+- **Component Logic Tests**: Tests for computed properties like `hasActiveFilters` and `activeFilterCount`
+- **Event Publishing Logic**: Tests for EventBus integration and event publishing
+- **EventBus Integration**: Tests for subscription setup and cleanup
+- **Filter Display Logic**: Tests for tag generation and labeling
+- **Internationalization Logic**: Tests for locale handling and message formatting
+- **Props Validation Logic**: Tests for prop handling and defaults
+- **Edge Cases and Error Handling**: Tests for null/undefined values, empty arrays, and malformed data
+- **Performance and Optimization**: Tests for handling large filter sets efficiently
+- **Accessibility and UX Considerations**: Tests for screen reader support and keyboard navigation
+
+### Test Structure
+
+The tests are organized into logical groups and use mocking to isolate the component's functionality:
+
+```javascript
+// Example test structure
+describe('ActiveFilters Component', () => {
+  describe('Component Logic Tests', () => {
+    it('should correctly calculate hasActiveFilters computed property', () => {
+      // Test implementation
+    })
+  })
+  
+  describe('Event Publishing Logic', () => {
+    it('should publish correct event when removing filter', () => {
+      // Test implementation
+    })
+  })
+  
+  // ... more test groups
+})
+```
+
+The tests mock external dependencies like PubSub and i18n to ensure fast, reliable test execution.
+
+### Component Lifecycle
+
+1. **Created**: Sets up EventBus listeners for filter communication
+2. **BeforeDestroy**: Cleans up EventBus subscriptions to prevent memory leaks
+
+### Performance Considerations
+
+- The component efficiently handles large filter sets through optimized computed properties
+- Event subscription cleanup prevents memory leaks in long-running applications
+- Minimal re-renders through proper Vue reactivity patterns
+
+### Customization
+
+The component supports extensive customization through:
+
+- **Background Color**: Use the `backgroundColor` prop to customize the component's appearance
+- **Internationalization**: Provide custom messages via `customMessages` prop
+- **Filter Labels**: Map technical filter keys to user-friendly labels via `filterLabels`
+
+### Error Handling
+
+The component gracefully handles edge cases:
+
+- Null or undefined `activeFilters`
+- Empty arrays in filter values
+- Missing filter labels (falls back to property names)
+- Malformed filter data
+
+## Browser Support
+
+This component supports all modern browsers that are compatible with Vue 2.7+ and Element UI 2.15+.
+
+## Contributing
+
+When contributing to this component:
+
+1. Ensure all tests pass: `npm test`
+2. Add tests for new functionality
+3. Follow the existing code style and patterns
+4. Update documentation for any API changes
+
+## License
+
+MIT License - see LICENSE file for details.

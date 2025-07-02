@@ -1,10 +1,11 @@
 <template>
   <div 
     v-if="hasActiveFilters" 
-    class="filters-section"
+    class="active-filters-section"
+    :style="{ backgroundColor: backgroundColor }"
   >
-    <!-- Filter Count -->
-    <div class="filter-count">
+    <!-- Filter Count and Clear All Button -->
+    <div class="filter-header">
       <span class="filter-count-text">
         <i class="el-icon-search"></i>
         {{ i18n.t('filterCount', { count: activeFilterCount }) }}
@@ -20,25 +21,20 @@
       </el-button>
     </div>
     
-    <!-- Active Filters -->
-    <div 
-      v-if="hasActiveFilters" 
-      class="active-filters"
-    >
-      <div class="active-filters-tags">
-        <template v-for="(values, key) in activeFilters">
-          <el-tag
-            v-for="value in values"
-            :key="`${key}-${value}`"
-            closable
-            size="small"
-            class="filter-tag"
-            @close="handleRemoveFilter(key, value)"
-          >
-            {{ getColumnLabel(key) }}: {{ value }}
-          </el-tag>
-        </template>
-      </div>
+    <!-- Active Filter Tags -->
+    <div class="active-filters-tags">
+      <template v-for="(values, key) in activeFilters">
+        <el-tag
+          v-for="value in values"
+          :key="`${key}-${value}`"
+          closable
+          size="small"
+          class="filter-tag"
+          @close="handleRemoveFilter(key, value)"
+        >
+          {{ getColumnLabel(key) }}: {{ value }}
+        </el-tag>
+      </template>
     </div>
   </div>
 </template>
@@ -57,6 +53,11 @@ export default {
     filterLabels: {
       type: Object,
       required: true
+    },
+    // Background color customization
+    backgroundColor: {
+      type: String,
+      default: '#f0f9ff'
     },
     // i18n props
     locale: {
@@ -177,19 +178,20 @@ export default {
 </script>
 
 <style scoped>
-.filters-section {
+.active-filters-section {
   margin-bottom: 16px;
+  padding: 12px 16px;
+  /* Default background-color moved to prop with fallback */
+  background-color: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
 }
 
-.filter-count {
+.filter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background-color: #f0f9ff;
-  border: 1px solid #bae6fd;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .filter-count-text {
@@ -215,13 +217,6 @@ export default {
   color: #0284c7;
 }
 
-.active-filters {
-  padding: 12px;
-  background-color: #f5f7fa;
-  border-radius: 4px;
-  border: 1px solid #e4e7ed;
-}
-
 .active-filters-tags {
   display: flex;
   flex-wrap: wrap;
@@ -230,5 +225,18 @@ export default {
 
 .filter-tag {
   margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .filter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .clear-all-btn {
+    align-self: flex-end;
+  }
 }
 </style>
