@@ -2,7 +2,6 @@
   <div 
     v-if="hasActiveFilters" 
     class="active-filters-section"
-    :style="{ backgroundColor: backgroundColor }"
   >
     <!-- Filter Count and Clear All Button -->
     <div class="filter-header">
@@ -53,11 +52,6 @@ export default {
     filterLabels: {
       type: Object,
       required: true
-    },
-    // Background color customization
-    backgroundColor: {
-      type: String,
-      default: '#f0f9ff'
     },
     // i18n props
     locale: {
@@ -181,7 +175,6 @@ export default {
 .active-filters-section {
   margin-bottom: 16px;
   padding: 12px 16px;
-  /* Default background-color moved to prop with fallback */
   background-color: #f0f9ff;
   border: 1px solid #bae6fd;
   border-radius: 6px;

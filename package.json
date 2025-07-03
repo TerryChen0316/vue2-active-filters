@@ -1,6 +1,6 @@
 {
   "name": "@terry0316/vue2-active-filters",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Vue 2 + Element UI active filters component with remote search and i18n support.",
   "main": "index.js",
   "types": "types/index.d.ts",
